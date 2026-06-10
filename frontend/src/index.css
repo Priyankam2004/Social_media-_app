@@ -1,0 +1,5 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; color: #1a1a1a; }
+button { cursor: pointer; border: none; outline: none; }
+input, textarea { outline: none; border: none; }
+a { text-decoration: none; }

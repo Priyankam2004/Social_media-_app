@@ -1,0 +1,11 @@
+.feed {
+  max-width: 600px;
+  margin: 80px auto 40px;
+  padding: 0 16px;
+}
+.msg {
+  text-align: center;
+  color: #888;
+  margin-top: 40px;
+  font-size: 15px;
+}
