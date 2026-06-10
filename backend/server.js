@@ -24,7 +24,7 @@ if (!fs.existsSync(uploadsDir)) {
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'https://social-media-app-rosy-seven.vercel.app'],
   credentials: true
 }));
 
