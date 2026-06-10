@@ -54,7 +54,7 @@ export default function PostCard({ post }) {
 
       {post.image && (
         <img
-          src={`http://localhost:5000${post.image}`}
+          src={`${process.env.REACT_APP_API_URL}${post.image}`}
           alt="post"
           className={styles.image}
         />

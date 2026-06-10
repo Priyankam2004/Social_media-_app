@@ -22,7 +22,11 @@ export default function Avatar({ src, name = '', size = 40, onClick, style = {} 
 
   if (src) {
     // If it's a relative /uploads/... path, prefix with backend origin
-    const imgSrc = src.startsWith('http') ? src : `http://localhost:5000${src}`;
+   const API_URL = process.env.REACT_APP_API_URL;
+
+    const imgSrc = src.startsWith('http')
+      ? src
+      : `${API_URL}${src}`;
     return (
       <img
         src={imgSrc}
