@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../../api'
 
 export const register = createAsyncThunk('auth/register', async (data, { rejectWithValue }) => {
   try {
-    const res = await axios.post('/api/auth/register', data);
+    const res = await api.post('/api/auth/register', data);
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data.user));
     return res.data;
@@ -14,7 +14,7 @@ export const register = createAsyncThunk('auth/register', async (data, { rejectW
 
 export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
   try {
-    const res = await axios.post('/api/auth/login', data);
+    const res = await api.post('/api/auth/login', data);
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data.user));
     return res.data;
@@ -26,7 +26,7 @@ export const login = createAsyncThunk('auth/login', async (data, { rejectWithVal
 export const updateProfile = createAsyncThunk('auth/updateProfile', async (formData, { rejectWithValue }) => {
   try {
     const token = localStorage.getItem('token');
-    const res = await axios.put('/api/users/profile', formData, {
+    const res = await api.put('/api/users/profile', formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data',

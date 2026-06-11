@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../../api';
 
 const authHeader = () => ({
   Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -7,7 +7,7 @@ const authHeader = () => ({
 
 export const fetchPosts = createAsyncThunk('posts/fetchAll', async (_, { rejectWithValue }) => {
   try {
-    const res = await axios.get('/api/posts', { headers: authHeader() });
+    const res = await api.get('/api/posts', { headers: authHeader() });
     return res.data;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || 'Failed to fetch posts');
@@ -16,7 +16,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchAll', async (_, { rejectW
 
 export const createPost = createAsyncThunk('posts/create', async (formData, { rejectWithValue }) => {
   try {
-    const res = await axios.post('/api/posts', formData, {
+    const res = await api.post('/api/posts', formData, {
       headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' },
     });
     return res.data;
@@ -27,7 +27,7 @@ export const createPost = createAsyncThunk('posts/create', async (formData, { re
 
 export const deletePost = createAsyncThunk('posts/delete', async (id, { rejectWithValue }) => {
   try {
-    await axios.delete(`/api/posts/${id}`, { headers: authHeader() });
+    await api.delete(`/api/posts/${id}`, { headers: authHeader() });
     return id;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || 'Failed to delete post');
@@ -36,7 +36,7 @@ export const deletePost = createAsyncThunk('posts/delete', async (id, { rejectWi
 
 export const likePost = createAsyncThunk('posts/like', async (id, { rejectWithValue }) => {
   try {
-    const res = await axios.put(`/api/posts/${id}/like`, {}, { headers: authHeader() });
+    const res = await api.put(`/api/posts/${id}/like`, {}, { headers: authHeader() });
     return { id, likes: res.data.likes };
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || 'Failed to like post');
@@ -45,7 +45,7 @@ export const likePost = createAsyncThunk('posts/like', async (id, { rejectWithVa
 
 export const addComment = createAsyncThunk('posts/addComment', async ({ postId, text }, { rejectWithValue }) => {
   try {
-    const res = await axios.post(
+    const res = await api.post(
       `/api/posts/${postId}/comments`,
       { text },
       { headers: authHeader() }
@@ -58,7 +58,7 @@ export const addComment = createAsyncThunk('posts/addComment', async ({ postId, 
 
 export const deleteComment = createAsyncThunk('posts/deleteComment', async ({ postId, commentId }, { rejectWithValue }) => {
   try {
-    await axios.delete(`/api/posts/${postId}/comments/${commentId}`, { headers: authHeader() });
+    await api.delete(`/api/posts/${postId}/comments/${commentId}`, { headers: authHeader() });
     return { postId, commentId };
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || 'Failed to delete comment');
